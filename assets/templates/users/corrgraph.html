@@ -1,0 +1,32 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block contents %}
+
+<div id="tooplate_main">
+
+    <div class="graph-wrapper">
+        <img src="{% static 'images/corr.png' %}" class="graph-img">
+    </div>
+
+    <div class="cleaner"></div>
+</div>
+
+{% endblock %}
+.graph-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* 🎯 Perfect Desktop Fit */
+.graph-img {
+    width: 60%;            /* reduce width */
+    max-width: 700px;      /* control max size */
+    height: auto;          /* maintain ratio */
+    margin: 40px auto;     /* space from top & bottom */
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}

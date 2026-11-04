@@ -1,0 +1,222 @@
+{%extends 'admins/adminbase.html'%}
+
+{%block contents%}
+
+<style>
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+{% comment %} #tooplate_main {
+    width: 100%;
+    max-width: 1200px;     /* 🔑 align with heading */
+    margin: 0 auto 30px;
+    padding: 0 15px;
+    box-sizing: border-box;
+} {% endcomment %}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#tooplate_main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ===== PAGE-SPECIFIC HEADING SPACING ===== */
+.page-heading {
+    width: 100%;
+    max-width: 1200px;        /* match table width */
+    margin: 70px auto 20px;   /* 🔑 space from navbar */
+    text-align: center;
+}
+
+/* keep your existing animation intact */
+.page-heading h2 {
+    margin: 0;
+}
+
+
+/* Header */
+thead tr {
+    background:#20B2AA;
+    color: white;
+}
+
+thead th {
+    padding: 14px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Body Rows */
+tbody tr {
+    background: #ffffff;
+    color: #1f2933;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+    transition: background 0.3s ease;
+}
+
+tbody tr:nth-child(even) {
+    background: #f1fdfc;
+}
+
+tbody tr:hover {
+    background: #e6fffa;
+}
+
+/* Cells */
+tbody td {
+    padding: 12px 8px;
+    font-size: 13px;
+}
+
+/* Status Colors */
+td:nth-child(7) {
+    font-weight: 600;
+}
+
+
+
+/* Action Links */
+a.btn-link {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+a.btn-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    #tooplate_main {
+        padding: 10px;
+        margin: 0;
+    }
+
+    table {
+        border: 0;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        padding: 10px;
+        background: #ffffff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px 10px 10px 50%;
+        position: relative;
+        font-size: 14px;
+        color: #0f172a;
+        border-bottom: 1px solid #f1f5f9;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    tbody td:last-child {
+        border-bottom: none;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 45%;
+        font-weight: 600;
+        text-align: left;
+        color: #0f766e;
+    }
+@media (max-width: 768px) {
+
+    .page-heading {
+        margin: 40px auto 20px;   /* 🔑 less space for mobile */
+        padding: 0 10px;
+    }
+
+    .page-heading h2 {
+        font-size: 20px;          /* smaller heading */
+    }
+}
+
+
+
+</style>
+<div class='page-heading'>
+<h2>View Registered Users</h2>
+</div>
+<div id="tooplate_main">
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Login ID</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Locality</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td data-label="S.No">{{ forloop.counter }}</td>
+                <td data-label="Name">{{ i.name }}</td>
+                <td data-label="Login ID">{{ i.loginid }}</td>
+                <td data-label="Mobile">{{ i.mobile }}</td>
+                <td data-label="Email">{{ i.email }}</td>
+                <td data-label="Locality">{{ i.locality }}</td>
+                <td data-label="Status">{{ i.status }}</td>
+
+                {% if i.status == 'waiting' %}
+                    <td data-label="Action">
+                        <a href="/AdminActivaUsers/?uid={{ i.id }}" style="color:green">Activate</a>
+                    </td>
+                {% else %}
+                    <td data-label="Action">
+                        Activated / <a href="/DeleteUsers/?uid={{ i.id }}" style="color:red">Delete</a>
+                    </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

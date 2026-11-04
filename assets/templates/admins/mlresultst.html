@@ -1,0 +1,158 @@
+{% extends 'admins/adminbase.html' %}
+
+{% block contents %}
+
+<style>
+/* Base Styles */
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+#tooplate_main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ===== PAGE-SPECIFIC HEADING SPACING ===== */
+.page-heading {
+    width: 100%;
+    max-width: 1200px;        /* match table width */
+    margin: 70px auto 20px;   /* 🔑 space from navbar */
+    text-align: center;
+}
+
+/* keep your existing animation intact */
+.page-heading h2 {
+    margin: 0;
+}
+
+/* ================= THE FIX: TABLE WRAPPER ================= */
+.table-wrapper {
+    width: 100%;
+    border-radius: 12px;      /* Rounded corners here */
+    overflow: hidden;         /* This clips the table corners */
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Borders now play nice with the wrapper */
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: white;
+}
+
+thead tr {
+    background: #20B2AA;
+    color: white;
+}
+
+thead th {
+    padding: 16px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+tbody tr {
+    color: #1f2933;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+    transition: background 0.3s ease;
+}
+
+tbody tr:last-child {
+    border-bottom: none; /* Clean look for the last row */
+}
+
+tbody tr:nth-child(even) {
+    background: #f1fdfc;
+}
+
+tbody tr:hover {
+    background: #e6fffa;
+}
+
+tbody td {
+    padding: 14px 8px;
+    font-size: 13px;
+}
+
+/* ================= RESPONSIVE (Mobile) ================= */
+@media (max-width: 768px) {
+
+    .page-heading {
+        margin: 40px auto 20px;   /* 🔑 less space for mobile */
+        padding: 0 10px;
+    }
+
+    .page-heading h2 {
+        font-size: 20px;          /* smaller heading */
+    }
+}
+
+    /* Keeps the table structure but adjusts padding for small screens */
+    thead th, tbody td {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+}
+</style>
+
+<div class="page-heading">
+    <h2>View ML Results</h2>
+</div>
+
+<div id="tooplate_main">
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Algorithm</th>
+                    <th>Accuracy (%)</th>
+                    <th>Students at Risk</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>{{ knn.model }}</td>
+                    <td>{{ knn.accuracy }}</td>
+                    <td>{{ knn.students_at_risk }}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>{{ dt.model }}</td>
+                    <td>{{ dt.accuracy }}</td>
+                    <td>{{ dt.students_at_risk }}</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>{{ nn.model }}</td>
+                    <td>{{ nn.accuracy }}</td>
+                    <td>{{ nn.students_at_risk }}</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>{{ nb.model }}</td>
+                    <td>{{ nb.accuracy }}</td>
+                    <td>{{ nb.students_at_risk }}</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>{{ svm.model }}</td>
+                    <td>{{ svm.accuracy }}</td>
+                    <td>{{ svm.students_at_risk }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'users/userbase.html' %}
+{% block contents %}
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+    .dashboard-bg { 
+        background: #f4f7f9; 
+        min-height: 100vh; 
+        padding: 40px; 
+        font-family: 'Segoe UI', sans-serif; 
+    }
+    
+    .glass-card { 
+        background: white; 
+        border-radius: 15px; 
+        padding: 40px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        max-width: 550px; 
+        margin: 0 auto; 
+    }
+    
+    .form-grid { display: flex; flex-direction: column; gap: 18px; }
+    .input-group { display: flex; flex-direction: column; gap: 5px; }
+    .input-group label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+
+    .input-field { 
+        width: 100%; 
+        padding: 12px; 
+        border: 1px solid #cbd5e1; 
+        border-radius: 8px; 
+        font-size: 0.95rem; 
+        background: #fafafa;
+        transition: border-color 0.3s;
+    }
+    .input-field:focus { border-color: #20B2AA; outline: none; background: white; }
+
+    .btn-analyze { 
+        background: #20B2AA; 
+        color: white; 
+        border: none; 
+        padding: 16px; 
+        border-radius: 8px; 
+        width: 100%; 
+        font-weight: bold; 
+        cursor: pointer; 
+        margin-top: 20px; 
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+    .btn-analyze:hover { background: #008080; transform: translateY(-2px); }
+
+    /* MODAL STYLES */
+    .modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(15, 23, 42, 0.75); display: none; 
+        justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px);
+    }
+
+    .modal-card {
+        background: white; padding: 40px; border-radius: 20px; text-align: center;
+        max-width: 420px; width: 90%; box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+        z-index: 1001; animation: popIn 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48);
+    }
+
+    @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+    .modal-card h1 { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+    .modal-card i { font-size: 5.5rem; margin-bottom: 20px; }
+    .text-pass { color: #20B2AA; }
+    .text-fail { color: #ff4b2b; }
+
+    .btn-close { 
+        margin-top: 25px; padding: 12px 35px; border: none; background: #0f172a; 
+        color: white; border-radius: 8px; cursor: pointer; font-weight: 600;
+    }
+</style>
+
+<div class="dashboard-bg">
+    <div class="glass-card">
+        <h3 style="color: #2c3e50; margin-bottom: 25px; text-align: center; font-weight: 700;">
+            <i class="fa fa-sliders"></i> Prediction Configuration
+        </h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>Establishment Type</label>
+                    <select name="TypeEtab" class="input-field" required>
+                        <option value="Public">Public School</option>
+                        <option value="Private">Private School</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Student Gender</label>
+                    <select name="Genre" class="input-field" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Level of Education</label>
+                    <select name="Niveau" class="input-field" required>
+                        <option value="Primary">Primary</option>
+                        <option value="Secondary">Secondary</option>
+                        <option value="Tertiary">Tertiary</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Academic Delay (RetardSco)</label>
+                    <select name="RetardSco" class="input-field" required>
+                        <option value="0 year">No Delay</option>
+                        <option value="1 year">1 Year Delay</option>
+                        <option value="2 years">2+ Years Delay</option>
+                        <option value="NaN">Not Available</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Provenance / Location</label>
+                    <select name="Provenance" class="input-field" required>
+                        <option value="Urban">Urban</option>
+                        <option value="Rural">Rural</option>
+                        <option value="Suburban">Suburban</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Physical Disability (Handicap)</label>
+                    <select name="Handicap" class="input-field" required>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Receives Social Aid</label>
+                    <select name="SocialAid" class="input-field" required>
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>CD_MIL Analytical Score</label>
+                    <input type="number" step="any" name="CD_MIL" class="input-field" placeholder="Enter CD_MIL Score" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Current Average Grade (Moy)</label>
+                    <input type="number" step="any" name="Moy" class="input-field" placeholder="Enter Average (e.g. 14.5)" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-analyze">ANALYZE PERFORMANCE</button>
+        </form>
+    </div>
+</div>
+
+<h4>Prediction: {{ res }} ({{ prob }}% confidence)</h4>
+
+{% if weak_areas %}
+<div class="card mt-3">
+  <div class="card-header">Areas of Concern</div>
+  <ul class="list-group list-group-flush">
+    {% for point in weak_areas %}
+      <li class="list-group-item">{{ point }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% if suggestions %}
+<div class="card mt-3">
+  <div class="card-header">💡 Suggested Improvements</div>
+  <div class="card-body" style="white-space: pre-line;">
+    {{ suggestions }}
+  </div>
+</div>
+{% endif %}
+{% if res %}
+<div class="modal-overlay" id="resultModal">
+    <div class="modal-card">
+        {% if res == 'PASS' %}
+            <i class="fa fa-trophy text-pass"></i>
+            <h1 class="text-pass">CONGRATULATIONS!</h1>
+            <p style="font-size: 1.1rem;">The student is predicted to <strong>PASS</strong>.</p>
+        {% else %}
+            <i class="fa fa-exclamation-circle text-fail"></i>
+            <h1 class="text-fail">AT RISK</h1>
+            <p style="font-size: 1.1rem;">The student is predicted to <strong>FAIL</strong>.</p>
+        {% endif %}
+        
+        <div style="background: #f8fafc; padding: 10px; border-radius: 10px; margin-top: 20px;">
+            <span style="color: #64748b; font-size: 0.9rem;">AI Confidence Level: </span>
+            <strong style="color: #0f172a;">{{ prob }}%</strong>
+        </div>
+
+        <button class="btn-close" onclick="closeModal()">DISMISS</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById('resultModal');
+        
+        setTimeout(() => {
+            modal.style.display = 'flex';
+            {% if res == 'PASS' %}
+                triggerFallingPapers();
+            {% endif %}
+        }, 300);
+    });
+
+    function triggerFallingPapers() {
+        var duration = 4 * 1000;
+        var end = Date.now() + duration;
+
+        (function frame() {
+            confetti({
+                particleCount: 3,
+                angle: 270,
+                spread: 100,
+                origin: { x: Math.random(), y: -0.2 },
+                colors: ['#20B2AA', '#ffffff', '#ffd700'],
+                ticks: 300,
+                gravity: 0.7,
+                scalar: 1.2,
+                zIndex: 1100
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+
+    function closeModal() {
+        document.getElementById('resultModal').style.display = 'none';
+    }
+</script>
+{% endif %}
+
+{% endblock %}

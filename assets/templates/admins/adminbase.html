@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | EWS System</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/tooplate_style.css' %}">
+</head>
+
+<body>
+
+<!-- ===== Desktop Navbar ===== -->
+<header id="tooplate_header_sp">
+    <nav id="tooplate_menu">
+        <ul>
+            <li><a href="{% url 'AdminHome' %}"><i class="fa fa-house"></i> Home</a></li>
+            <li><a href="{% url 'ViewRegisteredUsers' %}"><i class="fa fa-users"></i> Users</a></li>
+            <li><a href="{% url 'adminMLResults' %}"><i class="fa fa-brain"></i> ML Results</a></li>
+            <li><a href="{% url 'AccuracyGraphs' %}"><i class="fa fa-chart-line"></i> Graphs</a></li>
+            <li><a href="{% url 'logout' %}"><i class="fa fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- ===== Mobile Topbar ===== -->
+<div class="topbar">
+    <span class="menu-btn" onclick="openSidebar()">☰</span>
+</div>
+
+<!-- ===== Sidebar ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="logo">
+        Admin Panel
+        <span class="close-btn" onclick="closeSidebar()">×</span>
+    </div>
+
+    <a href="{% url 'AdminHome' %}"><i class="fa fa-house"></i> Home</a>
+    <a href="{% url 'ViewRegisteredUsers' %}"><i class="fa fa-users"></i> Users</a>
+    <a href="{% url 'adminMLResults' %}"><i class="fa fa-brain"></i> ML Results</a>
+    <a href="{% url 'AccuracyGraphs' %}"><i class="fa fa-chart-line"></i> Graphs</a>
+    <a href="{% url 'logout' %}"><i class="fa fa-right-from-bracket"></i> Logout</a>
+</aside>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ===== Main Wrapper ===== -->
+<div id="tooplate_wrapper_sp">
+
+    <main id="tooplate_main">
+
+
+        <!-- Page Content -->
+        {% block contents %}{% endblock %}
+
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer id="tooplate_footer_wrapper">
+        <div id="tooplate_footer">
+            © 2026 Early Warning System. All Rights Reserved.
+        </div>
+    </footer>
+
+</div>
+
+<!-- ===== Scripts ===== -->
+
+<script>
+function openSidebar() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeSidebar() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+</script>
+
+<!-- ✅ Underline Animation Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const heading = document.querySelector(".page-heading h2");
+    if (heading) {
+        setTimeout(() => {
+            heading.classList.add("animate-underline");
+        }, 200);
+    }
+});
+</script>
+
+<!-- Highcharts -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script>
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        document.getElementById("sidebar").classList.remove("active");
+        document.getElementById("overlay").classList.remove("active");
+    }
+});
+</script>
+
+</body>
+</html>

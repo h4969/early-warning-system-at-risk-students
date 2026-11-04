@@ -1,0 +1,228 @@
+{%extends 'base.html'%}
+
+{%block contents%}
+
+<style>
+/* Root variables for easy color changes */
+:root {
+    --primary-color: #20B2AA;
+    --dark-teal: #0F4C5C;
+    --bg-soft: #F8FAFC;
+    --shadow: 0 10px 25px rgba(32, 178, 170, 0.15);
+}
+
+body {
+    background: var(--bg-soft);
+}
+
+/* Center the entire login section */
+#tooplate_main {
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* The Login Card Container */
+#tooplate_main form {
+    background: #ffffff;
+    padding: 45px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(32, 178, 170, 0.1);
+}
+
+/* Table layout for spacing */
+#tooplate_main table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 20px; /* 🔑 THIS creates the clean gap between inputs */
+}
+
+/* Heading Style */
+.page-heading {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.page-heading h2 {
+    color: var(--dark-teal);
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    display: inline-block;
+    position: relative;
+}
+
+/* Animated Underline */
+.page-heading h2::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background: var(--primary-color);
+    margin: 6px auto 0;
+    border-radius: 10px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-heading h2.animate-underline::after {
+    width: 100%;
+}
+
+/* Label Styling */
+#tooplate_main td:first-child {
+    font-weight: 600;
+    font-size: 14px;
+    padding-right: 15px;
+    white-space: nowrap;
+}
+
+/* Input Styling */
+#tooplate_main input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #E2E8F0;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background-color: #fcfcfc;
+}
+
+#tooplate_main input:focus {
+    border-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(32, 178, 170, 0.1);
+    outline: none;
+}
+
+/* Password Eye Icon */
+.password-cell {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjxwYXRoIGQ9Ik0xLjI2IDkuNkE2Ljk3IDYuOTcgMCAwMTggNGMzLjIgMCA2LjA2IDIuMzMgNi43NCA1LjZhLjUuNSAwIDAwLjk4LS4yQTcuOTcgNy45NyAwIDAwOCAzIDcuOTcgNy45NyAwIDAwLjI4IDkuNGEuNS41IDAgMDAuOTguMnoiIGZpbGw9IldpbmRvd1RleHQiLz48cGF0aCBkPSJNOCA2YTMuNSAzLjUgMCAxMDAgNyAzLjUgMy41IDAgMDAwLTd6TTUuNSA5LjVhMi41IDIuNSAwIDExNSAwIDIuNSAyLjUgMCAwMS01IDB6IiBmaWxsPSJXaW5kb3dUZXh0Ii8+DQo8L3N2Zz4=");
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+/* Button Styling */
+#tooplate_main button {
+    width: 100%;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(32, 178, 170, 0.2);
+}
+
+#tooplate_main button:hover {
+    background: #178a83;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(32, 178, 170, 0.3);
+}
+
+#tooplate_main button:active {
+    transform: translateY(0);
+}
+
+/* Message Box */
+.msg-container {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #059669;
+}
+
+/* Responsive design for phones */
+@media (max-width: 600px) {
+    #tooplate_main form {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    #tooplate_main td {
+        display: block;
+        width: 100%;
+    }
+    #tooplate_main td:first-child {
+        padding-bottom: 8px;
+    }
+}
+</style>
+
+<div id="tooplate_main">
+    <form action="{%url 'AdminLoginCheck'%}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td colspan="2">
+                    <div class="page-heading">
+                        <h2 id="form-title">Admin Login</h2>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Login ID</td>
+                <td><input type="text" name="loginid" required placeholder="admin username"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td class="password-cell">
+                    <input type="password" id="password" name="pswd" required placeholder="enter password">
+                    <span class="eye-icon" onclick="togglePassword()"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Sign In</button>
+                </td>
+            </tr>
+
+            {% if messages %}
+                {% for message in messages %}
+                <tr>
+                    <td colspan="2" class="msg-container">
+                        {{ message }}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </form>
+</div>
+
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById("password");
+    passwordField.type = passwordField.type === "password" ? "text" : "password";
+}
+
+// Trigger animation on load
+window.addEventListener('DOMContentLoaded', () => {
+    const h2 = document.getElementById('form-title');
+    setTimeout(() => {
+        h2.classList.add('animate-underline');
+    }, 200);
+});
+</script>
+
+{%endblock%}

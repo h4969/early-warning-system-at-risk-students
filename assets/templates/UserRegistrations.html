@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<style>
+/* Root variables for styling consistency */
+:root {
+    --primary-color: #20B2AA;
+    --dark-teal: #0F4C5C;
+    --border-soft: #cbd5e1;
+    --bg-light: #f0f4f8;
+}
+
+/* Center the form container */
+#tooplate_main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; 
+    background: var(--bg-light);
+    padding: 40px 20px;
+}
+
+/* Form card styling */
+.form-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 550px;
+}
+
+/* Spacing between table rows */
+.form-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+}
+
+.form-container td {
+    padding: 5px;
+    vertical-align: middle;
+}
+
+/* Label Styling */
+.form-container td:first-child {
+    font-weight: 600;
+    color: var(--dark-teal);
+    font-size: 14px;
+    width: 30%;
+}
+
+/* 🔑 Transition Effect for Placeholders & Inputs */
+.form-container input, 
+.form-container select, 
+.form-container textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #fcfcfc;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-sizing: border-box;
+}
+
+/* Placeholder specific transition */
+.form-container input::placeholder {
+    transition: all 0.3s ease;
+    color: #94a3b8;
+}
+
+/* Interaction Effects on Focus */
+.form-container input:focus, 
+.form-container select:focus, 
+.form-container textarea:focus {
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(32, 178, 170, 0.15);
+    outline: none;
+    padding-left: 18px; /* Subtle expansion feel */
+}
+
+/* Move placeholder text on focus */
+.form-container input:focus::placeholder {
+    transform: translateX(10px);
+    opacity: 0.5;
+}
+
+/* Password positioning for eye icon */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.eye-icon {
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjxwYXRoIGQ9Ik0xLjI2IDkuNkE2Ljk3IDYuOTcgMCAwMTggNGMzLjIgMCA2LjA2IDIuMzMgNi43NCA1LjZhLjUuNSAwIDAwLjk4LS4yQTcuOTcgNy45NyAwIDAwOCAzIDcuOTcgNy45NyAwIDAwLjI4IDkuNGEuNS41IDAgMDAuOTguMnoiIGZpbGw9IldpbmRvd1RleHQiLz48cGF0aCBkPSJNOCA2YTMuNSAzLjUgMCAxMDAgNyAzLjUgMy41IDAgMDAwLTd6TTUuNSA5LjVhMi41IDIuNSAwIDExNSAwIDIuNSAyLjUgMCAwMS01IDB6IiBmaWxsPSJXaW5kb3dUZXh0Ii8+DQo8L3N2Zz4=");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.eye-icon:hover {
+    opacity: 1;
+}
+
+/* Submit Button Style */
+.form-container button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 30px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(32, 178, 170, 0.2);
+}
+
+.form-container button:hover {
+    background-color: #178a83;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(32, 178, 170, 0.3);
+}
+
+/* Heading & Animated Underline */
+.page-heading {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page-heading h2 {
+    color: var(--dark-teal);
+    font-size: 26px;
+    font-weight: 600;
+    display: inline-block;
+    padding-bottom: 8px;
+    position: relative;
+}
+
+.page-heading h2::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background: var(--primary-color);
+    margin: 4px auto 0;
+    border-radius: 10px;
+    transition: width 0.7s ease-out;
+}
+
+.page-heading h2.animate-underline::after {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .form-container td {
+        display: block;
+        width: 100%;
+    }
+    .form-container td:first-child {
+        padding-bottom: 5px;
+    }
+}
+</style>
+
+<div id="tooplate_main">
+    <div class="form-container">
+        <div class="page-heading">
+            <h2>User Registration</h2>
+        </div>
+        <form action="{% url 'UserRegisterActions' %}" method="POST">
+            {% csrf_token %}
+       
+    
+    {{ form.status }}
+
+    <table>
+        <tr>
+            <td>User Name</td>
+            <td>
+                {{ form.name }}
+                <div style="color: red; font-size: 11px;">{{ form.name.errors }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Login ID</td>
+            <td>
+                {{ form.loginid }}
+                <div style="color: red; font-size: 11px;">{{ form.loginid.errors }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>
+                <div class="password-wrapper">
+                    {{ form.password }} 
+                    <span class="eye-icon" onclick="togglePassword()"></span>
+                </div>
+                <div style="color: red; font-size: 11px;">{{ form.password.errors }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td>
+                {{ form.mobile }}
+                <div style="color: red; font-size: 11px;">{{ form.mobile.errors }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                {{ form.email }}
+                <div style="color: red; font-size: 11px;">{{ form.email.errors }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Locality</td>
+            <td>{{ form.locality }}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{ form.address }}</td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td>{{ form.city }}</td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>{{ form.state }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="submit">Sign Up Now</button>
+            </td>
+        </tr>
+    </table>
+</form>
+            {% if messages %}
+            <script>
+                window.onload = function() {
+                    {% for message in messages %}
+                        alert("{{ message }}");
+                    {% endfor %}
+                };
+            </script>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById("password");
+    passwordField.type = passwordField.type === "password" ? "text" : "password";
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const h2 = document.querySelector('.page-heading h2');
+    setTimeout(() => {
+        if(h2) h2.classList.add('animate-underline');
+    }, 150);
+});
+</script>
+
+{% endblock %}

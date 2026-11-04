@@ -1,0 +1,141 @@
+{% extends 'users/userbase.html' %}
+{% block contents %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Training</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:white ;
+            min-height: 100vh;
+        }
+
+        .container {
+        background:white;
+        width: 60%;
+        max-width: 1200px; /* allow larger width on big screens */
+        padding: 30px 40px;
+        margin: 20px auto; /* reduce top/bottom margin */
+        border-radius: 12px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        margin-top: 30px !important;   /* exact gap from navbar */
+
+}
+
+
+        .accuracy-box {
+            background: #e8f5e9;
+            border-left: 6px solid #4caf50;
+            padding: 15px;
+            margin-bottom: 25px;
+            font-size: 18px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        /* Table styling */
+        .report-box {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .report-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .report-box table th {
+            background: #20B2AA;
+            color: white;
+            font-weight: 600;
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .report-box table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+            word-break: break-word;
+        }
+
+        .report-box table tr:nth-child(even) {
+            background: #f1fdfc;
+        }
+
+        .report-box table tr:hover {
+            background: #e6fffa;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .report-box table th,
+            .report-box table td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .container {
+                margin: 10px auto;
+                padding: 20px 30px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px auto;
+                padding: 15px 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class='page-heading'>
+        <h2>Machine Learning Model Training</h2>
+    </div>
+
+    <div class="accuracy-box">
+        Model Accuracy: {{ accuracy }}
+    </div>
+
+    <div class="report-box">
+        <h3>Classification Report</h3>
+        <!-- If report is a table, display it as a table -->
+        {{ report|safe }}
+    </div>
+
+    <div class="footer">
+        © Machine Learning Training Module
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

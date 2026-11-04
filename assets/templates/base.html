@@ -1,0 +1,371 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Warning System</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+<style>
+
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html,body{
+height:100%;
+background:#ffffff;
+overflow-x:hidden;
+}
+
+body{
+display:flex;
+flex-direction:column;
+}
+
+/* ---------------- NAVBAR ---------------- */
+
+#tooplate_header_sp{
+background:#20B2AA;
+width:100%;
+height:50px;
+position:fixed;
+top:0;
+left:0;
+z-index:1000;
+display:flex;
+align-items:center;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+#tooplate_menu{
+max-width:1200px;
+width:100%;
+margin:auto;
+padding:0 20px;
+display:flex;
+justify-content:flex-end;
+}
+
+#tooplate_menu ul{
+list-style:none;
+display:flex;
+gap:40px;
+}
+
+#tooplate_menu ul li a{
+color:white;
+text-decoration:none;
+font-weight:500;
+font-size:15px;
+display:flex;
+align-items:center;
+gap:6px;
+transition:0.3s;
+}
+
+#tooplate_menu ul li a:hover{
+opacity:0.8;
+}
+
+/* ---------------- PAGE CONTENT ---------------- */
+
+.page-wrapper{
+flex:1 0 auto;
+width:100%;
+margin-top:45px;
+display:flex;
+flex-direction:column;
+position:relative;
+}
+
+/* ---------------- HERO BANNER ---------------- */
+
+.hero-banner{
+width:100%;
+height:420px;
+background:url("{% static 'images/ews.jpg' %}") no-repeat center center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+position:relative;
+}
+
+.hero-banner::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+padding:20px;
+}
+
+.hero-content h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero-content p{
+font-size:18px;
+}
+
+/* ---------------- MOBILE NAVIGATION ---------------- */
+
+.topbar{
+display:none;
+}
+
+.sidebar{
+position:fixed;
+top:0;
+left:-280px;
+width:280px;
+height:100%;
+background:white;
+z-index:2000;
+transition:0.3s ease;
+box-shadow:4px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar.active{
+left:0;
+}
+
+.sidebar-overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.5);
+z-index:1500;
+}
+
+.sidebar-overlay.active{
+display:block;
+}
+
+.sidebar a{
+display:block;
+padding:12px 18px;
+color:#20B2AA;
+text-decoration:none;
+border-bottom:1px solid #f0f0f0;
+font-weight:500;
+font-size:15px;
+}
+
+.sidebar a i{
+margin-right:10px;
+width:20px;
+text-align:center;
+}
+
+/* ---------------- MOBILE VIEW ---------------- */
+
+@media (max-width:768px){
+
+#tooplate_header_sp{
+display:none;
+}
+
+.topbar{
+display:flex;
+align-items:center;
+height:50px;
+background:#20B2AA;
+color:white;
+padding:0 15px;
+position:fixed;
+top:0;
+width:100%;
+z-index:1000;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.page-wrapper{
+margin-top:45px;
+}
+
+.hero-banner{
+height:260px;
+}
+
+.hero-content h1{
+font-size:24px;
+}
+
+.hero-content p{
+font-size:14px;
+}
+
+}
+
+/* ---------------- FOOTER ---------------- */
+
+#tooplate_footer_wrapper{
+background:#20B2AA;
+color:white;
+text-align:center;
+padding:15px 0;
+width:100%;
+flex-shrink:0;
+margin-top:auto;
+font-size:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header id="tooplate_header_sp">
+
+<nav id="tooplate_menu">
+
+<ul>
+
+<li>
+<a href="{% url 'index' %}">
+<i class="fa fa-house"></i> Home
+</a>
+</li>
+
+<li>
+<a href="{% url 'UserLogin' %}">
+<i class="fa fa-users"></i> Users
+</a>
+</li>
+
+<li>
+<a href="{% url 'AdminLogin' %}">
+<i class="fa fa-user-shield"></i> Admins
+</a>
+</li>
+
+<li>
+<a href="{% url 'UserRegister' %}">
+<i class="fa fa-pen-to-square"></i> Registrations
+</a>
+</li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<!-- MOBILE TOPBAR -->
+
+<div class="topbar">
+
+<span onclick="toggleSidebar()" style="cursor:pointer;font-size:22px;padding:10px;">
+<i class="fa fa-bars"></i>
+</span>
+
+<span style="margin-left:10px;font-weight:bold;letter-spacing:1px;">
+EWS SYSTEM
+</span>
+
+</div>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+<div style="padding:15px;background:#20B2AA;color:white;display:flex;justify-content:space-between;align-items:center;">
+
+<span style="font-weight:bold;">MENU</span>
+
+<span onclick="toggleSidebar()" style="cursor:pointer;font-size:26px;">
+&times;
+</span>
+
+</div>
+
+<a href="{% url 'index' %}">
+<i class="fa fa-house"></i> Home
+</a>
+
+<a href="{% url 'UserLogin' %}">
+<i class="fa fa-users"></i> Users
+</a>
+
+<a href="{% url 'AdminLogin' %}">
+<i class="fa fa-user-shield"></i> Admins
+</a>
+
+<a href="{% url 'UserRegister' %}">
+<i class="fa fa-pen-to-square"></i> Registrations
+</a>
+
+</aside>
+
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- PAGE CONTENT -->
+
+<div class="page-wrapper">
+
+{% block contents %}
+
+<div class="hero-banner">
+
+<div class="hero-content">
+
+<h1>Early Warning System</h1>
+
+<p>Advanced Disaster Prediction and Alert System</p>
+
+</div>
+
+</div>
+
+{% endblock %}
+
+</div>
+
+<!-- FOOTER -->
+
+<footer id="tooplate_footer_wrapper">
+
+<p>© 2026 Early Warning System. All Rights Reserved.</p>
+
+</footer>
+
+<script>
+
+function toggleSidebar(){
+
+const sidebar=document.getElementById("sidebar");
+const overlay=document.getElementById("overlay");
+
+sidebar.classList.toggle("active");
+overlay.classList.toggle("active");
+
+}
+
+window.addEventListener('resize',()=>{
+
+if(window.innerWidth>768){
+
+document.getElementById("sidebar").classList.remove("active");
+document.getElementById("overlay").classList.remove("active");
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+{% extends 'admins/adminbase.html' %}
+
+{% block contents %}
+<style>
+    /* 1. RESET AND LAYOUT */
+    #tooplate_main {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #0f172a;
+        min-height: calc(100vh - 140px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+    }
+
+    /* 2. DASHBOARD HERO */
+    .dashboard-hero {
+        position: relative;
+        width: 100%;
+        min-height: calc(100vh - 140px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .dashboard-hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: url('/static/images/home_background_image.jpg') no-repeat center center;
+        background-size: cover;
+        transform: scale(1.05);
+        z-index: 1;
+    }
+
+    .dashboard-hero::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(15, 23, 42, 0.75);
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Typing Animation */
+    .typing-text {
+        color: white;
+        font-size: clamp(18px, 4vw, 30px);
+        font-weight: bold;
+        margin-bottom: 40px;
+        overflow: hidden;
+        border-right: 3px solid transparent; 
+        white-space: nowrap;
+        margin: 0 auto 40px auto;
+        width: fit-content;
+        animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end 5 forwards; 
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #20B2AA; } }
+
+    /* 3. INCREASED CARD CONTAINER WIDTH */
+    .card-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        gap: 25px;
+        max-width: 1150px; /* INCREASED from 950px to make cards bigger/wider */
+        margin: 0 auto;
+        padding: 0 15px;
+        width: 100%;
+    }
+
+    .admin-card {
+        background: rgba(32, 178, 170, 0.12);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 15px;
+        padding: 35px 20px; /* INCREASED padding for a larger card feel */
+        flex: 1 1 0px; 
+        max-width: 300px; /* INCREASED max-width for individual cards */
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .admin-card:hover {
+        transform: translateY(-8px);
+        background: rgba(32, 178, 170, 0.25);
+    }
+
+    .admin-card i {
+        font-size: 36px;
+        color: #4fd1c5;
+        margin-bottom: 15px;
+    }
+
+    .admin-card h3 {
+        font-size: 1.2rem;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .admin-card p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    /* 4. REDUCED BUTTON SIZE */
+    .btn-action {
+        background-color: #20B2AA;
+        color: white !important;
+        padding: 8px 14px; /* REDUCED significantly */
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 0.7rem; /* REDUCED font size for a mini-look */
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-block;
+        align-self: center;
+    }
+
+    .btn-action:hover {
+        background-color: white;
+        color: #20B2AA !important;
+    }
+
+    /* 5. MOBILE VIEW */
+    @media (max-width: 900px) {
+        .card-row {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .admin-card {
+            width: 80%; 
+            max-width: 320px;
+            flex: none; 
+            margin-bottom: 20px;
+        }
+
+        .typing-text { white-space: normal; border-right: none; animation: none; }
+    }
+
+    ::-webkit-scrollbar { display: none; }
+</style>
+
+<div id="tooplate_main">
+    <div class="dashboard-hero">
+        <div class="hero-content">
+            <h1 class="typing-text">Select an Administrative Action to Perform</h1>
+            
+            <div class="card-row">
+                <div class="admin-card">
+                    <div>
+                        <i class="fas fa-users"></i>
+                        <h3>User Management</h3>
+                        <p>Monitor registered users and manage their permissions and access levels.</p>
+                    </div>
+                    <a href="{% url 'ViewRegisteredUsers' %}" class="btn-action">Manage Users</a>
+                </div>
+
+                <div class="admin-card">
+                    <div>
+                        <i class="fas fa-brain"></i>
+                        <h3>ML Results</h3>
+                        <p>Detailed analysis of forecasting accuracy across all implemented algorithms.</p>
+                    </div>
+                    <a href="{% url 'adminMLResults' %}" class="btn-action">View Analysis</a>
+                </div>
+
+                <div class="admin-card">
+                    <div>
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Visual Graphs</h3>
+                        <p>Explore interactive price trends and historical data through visual charts.</p>
+                    </div>
+                    <a href="{% url 'AccuracyGraphs' %}" class="btn-action">View Graphs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

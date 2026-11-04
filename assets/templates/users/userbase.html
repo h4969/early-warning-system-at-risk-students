@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+
+<title>
+Development of an Early Warning System to Support Educational Planning Process
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- W3 CSS -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="{% static 'css/ddsmoothmenu.css' %}">
+<link rel="stylesheet" href="{% static 'css/tooplate_style.css' %}">
+<!-- jQuery (ONLY ONCE) -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+<!-- DDSMOOTHMENU -->
+<script src="{% static 'js/ddsmoothmenu.js' %}"></script>
+
+<script>
+ddsmoothmenu.init({
+    mainmenuid: "tooplate_menu",
+    orientation: 'h',
+    classname: 'ddsmoothmenu',
+    contentsource: "markup"
+});
+</script>
+
+<!-- Mobile Menu JS -->
+<script>
+$(document).ready(function () {
+    $(".menu-toggle").click(function () {
+        $("#tooplate_menu ul").slideToggle();
+    });
+});
+</script>
+
+</head>
+
+<body>
+
+<div id="tooplate_wrapper_sp">
+
+    <!-- ===== Desktop Navbar ===== -->
+    <div id="tooplate_header_sp">
+        <div id="tooplate_menu">
+            <ul>
+                <li><a href="{% url 'UserHome' %}"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="{% url 'UserViewData' %}"><i class="fa fa-database"></i> View Data</a></li>
+                <li><a href="{% url 'training' %}"> <i class="fa fa-graduation-cap"></i> Training</a></li>
+                <li><a href="{% url 'prediction' %}"><i class="fa fa-chart-line"></i> Prediction</a></li>
+                {% comment %} <li><a href="{% url 'corrgraph' %}"><i class="fa fa-chart-line"></i> corrGraph</a></li> {% endcomment %}
+                <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== Mobile Sidebar + Topbar ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            Admin Panel
+            <span class="close-btn" onclick="closeSidebar()">×</span>
+        </div>
+        <li><a href="{% url 'UserHome' %}"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="{% url 'UserViewData' %}"><i class="fa fa-database"></i> View Data</a></li>
+                <li><a href="{% url 'training' %}"> <i class="fa fa-graduation-cap"></i> Training</a></li>
+                <li><a href="{% url 'prediction' %}"><i class="fa fa-chart-line"></i> Prediction</a></li>
+                {% comment %} <li><a href="{% url 'corrgraph' %}"><i class="fa fa-chart-line"></i> corrGraph</a></li> {% endcomment %}
+                <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+    </aside>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <div class="topbar">
+        <span class="menu-btn" onclick="openSidebar()">☰</span>
+        {% comment %} <h3 style="margin-left: 15px; color: #20B2AA;">Dashboard</h3> {% endcomment %}
+    </div>
+
+    <!-- ===== Main Content ===== -->
+    <main id="tooplate_main">
+        <div class="page-content">
+            {% block contents %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <div id="tooplate_footer_wrapper">
+        <div id="tooplate_footer">
+            <p>© 2026 Early Warning System. All Rights Reserved.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function openSidebar() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+function closeSidebar() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.page-heading h2').classList.add('animate-underline');
+});
+</script>
+
+<script>
+let lastScrollTop = 0;
+const navbar = document.getElementById("tooplate_header_sp");
+
+window.addEventListener("scroll", function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop && scrollTop > 80) {
+        // Scroll down → hide navbar
+        navbar.classList.add("hide");
+    } else {
+        // Scroll up → show navbar
+        navbar.classList.remove("hide");
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+});
+</script>
+
+</body>
+</html>
+
+
+
+

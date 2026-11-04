@@ -1,0 +1,210 @@
+/* ===== Base ===== */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* ===== Wrapper ===== */
+#tooplate_wrapper_sp {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Navbar (CONSISTENT) ===== */
+#tooplate_header_sp {
+    background: #20B2AA;
+    height: 50px;              /* SAME HEIGHT */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;              /* FULL WIDTH */
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+}
+
+/* Menu */
+#tooplate_menu {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+#tooplate_menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;             /* SAME AS NAVBAR */
+    gap: 40px;
+}
+
+#tooplate_menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#tooplate_menu ul li a:hover {
+    color: pink;
+}
+
+/* ===== Main Content ===== */
+#tooplate_main {
+    flex: 1;
+
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 70px 20px 20px;  /* FIX: space for navbar */
+}
+
+/* ===== Footer (CONSISTENT) ===== */
+#tooplate_footer_wrapper {
+    width: 100%;
+    background: #20B2AA;
+}
+
+#tooplate_footer {
+    height: 50px;             /* SAME HEIGHT EVERYWHERE */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 14px;
+}
+
+/* ===== Mobile Topbar ===== */
+.topbar {
+    display: none;
+    background: #20B2AA;
+    padding: 10px;
+    color: white;
+}
+
+.menu-btn {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100vh;
+    background: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    z-index: 1001;
+    padding-top: 20px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar .logo {
+    padding: 20px;
+    font-weight: bold;
+    color: #20B2AA;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 20px;
+    color: #20B2AA;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #f0fdfa;
+}
+
+/* ===== Overlay ===== */
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+
+    #tooplate_header_sp {
+        display: none;
+    }
+
+    .topbar {
+        display: block;
+    }
+
+    #tooplate_main {
+        padding: 60px 10px 20px;
+    }
+}
+/* ===== Heading (Center Animation) ===== */
+.page-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.page-heading h2 {
+    display: inline-block;
+    position: relative;
+    font-size: 28px;
+    font-weight: 600;
+    color: #0F4C5C;
+}
+
+/* underline (start from center) */
+.page-heading h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;                 /* center */
+    bottom: -6px;
+    height: 3px;
+    width: 0;
+    background: #20B2AA;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: width 0.6s ease;
+}
+/* animate → expand both sides */
+.page-heading h2.animate-underline::after {
+    width: 100%;              /* full text width */
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+    .page-heading h2 {
+        font-size: 20px;      /* smaller text */
+    }
+
+    .page-heading h2::after {
+        height: 3px;          /* thinner line */
+        bottom: -4px;
+    }
+}

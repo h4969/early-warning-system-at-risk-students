@@ -1,0 +1,194 @@
+/* ===== GOOGLE FONT (Professional) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #f9fbfc;
+}
+
+/* ===== MAIN WRAPPER ===== */
+#tooplate_wrapper_sp {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= NAVBAR ================= */
+#tooplate_header_sp {
+    background: #20B2AA;
+    height: 50px;                 /* FIXED HEIGHT */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;                  /* FULL WIDTH */
+    z-index: 1100;
+
+    display: flex;
+    align-items: center;
+
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Hide navbar */
+#tooplate_header_sp.hide {
+    transform: translateY(-100%);
+}
+
+/* Menu */
+#tooplate_menu {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+#tooplate_menu ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+#tooplate_menu ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+#tooplate_menu ul li a:hover {
+    color: #ffe4ec;
+}
+
+/* ================= CONTENT ================= */
+#tooplate_main {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    /* IMPORTANT: space for navbar */
+    padding: 70px 20px 30px;
+
+    box-sizing: border-box;
+}
+
+/* ================= FOOTER ================= */
+#tooplate_footer_wrapper {
+    width: 100%;
+    background: #20B2AA;
+}
+
+#tooplate_footer {
+    height: 45px;                 /* FIXED HEIGHT */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+/* ================= HEADINGS ================= */
+.page-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.page-heading h2 {
+    color: #0F4C5C;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+/* Underline animation */
+.page-heading h2::after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background: #20B2AA;
+    margin: 6px auto 0;
+    border-radius: 2px;
+    transition: width 0.6s ease;
+}
+
+.page-heading h2.animate-underline::after {
+    width: 100%;
+}
+
+/* ================= TABLES ================= */
+#tooplate_main table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#tooplate_main th,
+#tooplate_main td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+    /* Navbar menu becomes sidebar */
+    #tooplate_menu ul {
+        position: fixed;
+        top: 0;
+        left: -260px;
+        width: 250px;
+        height: 100%;
+        background: #20B2AA;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 40px;
+        gap: 20px;
+        transition: 0.3s ease;
+        z-index: 1200;
+    }
+
+    #tooplate_menu ul.active {
+        left: 0;
+    }
+
+    #tooplate_menu ul li {
+        width: 100%;
+        padding-left: 20px;
+    }
+
+    #tooplate_menu ul li a {
+        font-size: 15px;
+        width: 100%;
+    }
+
+    /* Content spacing */
+    #tooplate_main {
+        padding: 70px 10px 20px;
+    }
+
+    /* Tables scroll */
+    #tooplate_main table {
+        min-width: 600px;
+        font-size: 12px;
+    }
+}

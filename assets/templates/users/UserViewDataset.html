@@ -1,0 +1,96 @@
+{% extends 'users/userbase.html' %}
+
+{% block contents %}
+
+<style>
+/* ================= MAIN CONTENT ================= */
+#tooplate_main {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 50px 10px 10px;   /* ✅ space for fixed navbar */
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+    overflow-x: auto;
+    text-align:center;
+}
+
+/* ================= PAGE HEADING ================= */
+.page-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-heading h2 {
+    color: #0F4C5C;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ================= TABLE ================= */
+#tooplate_main table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#tooplate_main table th {
+    background: #20B2AA;
+    color: white;
+    font-weight: 600;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#tooplate_main table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+#tooplate_main table tr:nth-child(even) {
+    background: #f1fdfc;
+}
+
+#tooplate_main table tr:hover {
+    background: #e6fffa;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+    #tooplate_main {
+        padding-top: 30px;   /* ✅ tighter on mobile */
+    }
+
+    #tooplate_main table {
+        min-width: 700px;
+    }
+
+    #tooplate_main table th,
+    #tooplate_main table td {
+        padding: 8px 6px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+}
+</style>
+
+<div id="tooplate_main">
+
+    <div class="page-heading">
+        <h2>View Dataset</h2>
+    </div>
+
+    <em>
+        {{ data|safe }}
+    </em>
+
+</div>
+
+{% endblock %}
