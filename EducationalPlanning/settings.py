@@ -13,22 +13,19 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 from dotenv import load_dotenv
 
-from dotenv import load_dotenv
-load_dotenv()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Gemini API Key
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 # ✅ Load .env file
 # If your .env is in the project root (same folder as manage.py):
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # If your .env is in another folder, give the full path directly:
 # load_dotenv(r"D:\project folder\48.Development of an Early Warning System to\EducationalPlanning\.env")
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
