@@ -9,3 +9,32 @@ desktop.ini
 
 service-account*.json
 credentials*.json
+
+
+# Environment variables and secrets
+.env
+
+# Python generated files
+__pycache__/
+*.py[cod]
+
+# Django generated files
+staticfiles/
+media/
+
+# Local database
+db.sqlite3
+
+# Other files
+*.zip
+Thumbs.db
+desktop.ini
+
+# Credentials
+service-account*.json
+credentials*.json
+
+# Python virtual environments
+.ews/
+.venv/
+.venv311/
